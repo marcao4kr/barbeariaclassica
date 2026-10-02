@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Clássica | Tradição & Estilo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span class="logo-title">BARBEARIA</span>
+                <span class="logo-subtitle">CLÁSSICA</span>
+            </a>
+
+            <nav class="navbar" id="navbar">
+                <ul class="nav-list">
+                    <li><a href="#marca" class="nav-link">Nossa Marca</a></li>
+                    <li><a href="#servicos" class="nav-link">Barba & Cabelo</a></li>
+                    <li><a href="#kids" class="nav-link badge-kids">Espaço Kids</a></li>
+                    <li><a href="#portfolio" class="nav-link">Trabalhos</a></li>
+                    <li><a href="#avaliacoes" class="nav-link">Avaliações</a></li>
+                    <li><a href="#contato" class="nav-link">Unidades</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="btn btn-primary" id="btnOpenModal">Agende</button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir Menu">
+                    &#9776;
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="marca">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <p class="hero-tagline">Tradição, toalha quente e navalha afiada</p>
+            <h1 class="hero-title">A BARBEARIA QUE LEVA O CLÁSSICO A SÉRIO</h1>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" id="btnHeroAgendar">Agende seu Horário &rarr;</button>
+                <a href="#portfolio" class="btn btn-outline">Nossas Unidades</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience-section" id="servicos">
+        <div class="container">
+            <div class="experience-grid">
+                <div class="exp-card">
+                    <span class="exp-tag">Ambiente Principal</span>
+                    <h3>Clube do Cavalheiro</h3>
+                    <p>Linguagem visual sofisticada, música ambiente clássica, bar executivo e rituais tradicionais de barbearia com toalha quente.</p>
+                </div>
+                <div class="exp-card exp-kids" id="kids">
+                    <span class="exp-tag">Ambiente Exclusivo & Separado</span>
+                    <h3>Barbearia Kids</h3>
+                    <p>Espaço isolado acusticamente e preparado para o público infantil, garantindo diversão para os pequenos e tranquilidade no salão clássico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nossos Últimos Trabalhos</h2>
+                <p class="section-subtitle">Confira o resultado dos nossos profissionais em cada unidade</p>
+            </div>
+
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="todos">TODOS</button>
+                <button class="filter-btn" data-filter="unidade-centro">UNIDADE CENTRO</button>
+                <button class="filter-btn" data-filter="unidade-sul">UNIDADE JARDINS</button>
+            </div>
+
+            <div class="carousel-wrapper">
+                <button class="carousel-control prev" id="prevBtn" aria-label="Anterior">&#10094;</button>
+                
+                <div class="portfolio-carousel" id="portfolioCarousel">
+                    <div class="portfolio-item" data-category="unidade-centro">
+                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80" alt="Corte Clássico Executivo">
+                        <div class="portfolio-info">
+                            <h4>Corte Executivo & Pompadour</h4>
+                            <span>Unidade Centro</span>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item" data-category="unidade-sul">
+                        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&q=80" alt="Degradê e Barba">
+                        <div class="portfolio-info">
+                            <h4>Fade Clássico & Alinhamento</h4>
+                            <span>Unidade Jardins</span>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item" data-category="unidade-centro">
+                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=80" alt="Barba Tradicional na Navalha">
+                        <div class="portfolio-info">
+                            <h4>Barboterapia com Toalha Quente</h4>
+                            <span>Unidade Centro</span>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item" data-category="unidade-sul">
+                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=600&q=80" alt="Corte na Tesoura">
+                        <div class="portfolio-info">
+                            <h4>Corte Tradicional na Tesoura</h4>
+                            <span>Unidade Jardins</span>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item" data-category="unidade-centro">
+                        <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80" alt="Acabamento Navalhado">
+                        <div class="portfolio-info">
+                            <h4>Contorno na Navalha</h4>
+                            <span>Unidade Centro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control next" id="nextBtn" aria-label="Próximo">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section" id="avaliacoes">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">O QUE DIZEM</span>
+                <h2 class="section-title">AVALIAÇÕES</h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">
+                        "Barbearia à moda antiga com toalhas quentes e navalhas afiadas. Atendimento desde a recepção até os barbeiros é impecável."
+                    </p>
+                    <div class="testimonial-meta">
+                        <strong>RICARDO M. • UNIDADE CENTRO</strong>
+                        <span class="platform-badge">TRIPADVISOR</span>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">
+                        "Melhor barbearia da cidade. Corto aqui há mais de 3 anos. O sistema de agendamento online direto pelo site ajuda muito na rotina."
+                    </p>
+                    <div class="testimonial-meta">
+                        <strong>CLIENTE VERIFICADO • UNIDADE JARDINS</strong>
+                        <span class="platform-badge">GOOGLE</span>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">
+                        "Ambiente show, atendimento impecável, barbeiro gente fina. Corte, barba e cabelo superaram as expectativas. Virei cliente fiel."
+                    </p>
+                    <div class="testimonial-meta">
+                        <strong>DOUGLAS S. • UNIDADE CENTRO</strong>
+                        <span class="platform-badge">TRIPADVISOR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-top-grid">
+                <div class="newsletter-box">
+                    <span class="footer-label">CADASTRE-SE E RECEBA NOSSAS</span>
+                    <h3>NOVIDADES</h3>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="text" placeholder="Nome" required>
+                        <input type="email" placeholder="E-mail" required>
+                        <button type="submit" class="btn btn-primary">CADASTRAR</button>
+                    </form>
+                </div>
+
+                <div class="franchise-box">
+                    <h4>Informações sobre o processo de franquias</h4>
+                    <form class="franchise-form" id="franchiseForm">
+                        <p class="franchise-label">Selecione o Tipo de Franquia Desejada:</p>
+                        <div class="radio-group">
+                            <label><input type="radio" name="franquia" value="Compacta" checked> Compacta</label>
+                            <label><input type="radio" name="franquia" value="Modelo"> Modelo</label>
+                            <label><input type="radio" name="franquia" value="Tradicional"> Tradicional</label>
+                        </div>
+                        <input type="text" placeholder="Quer adicionar uma mensagem? Escreva aqui">
+                        <button type="submit" class="btn btn-primary">QUERO SER FRANQUEADO</button>
+                    </form>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-links-grid">
+                <div class="footer-col">
+                    <h4>INSTITUCIONAL</h4>
+                    <ul>
+                        <li><a href="#marca">Sobre</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#portfolio">Unidades</a></li>
+                        <li><a href="#">Loja</a></li>
+                        <li><a href="#">Barber School</a></li>
+                        <li><a href="#">Clube de Assinatura</a></li>
+                        <li><a href="#">Seja um Franqueado</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>ATENDIMENTO</h4>
+                    <ul class="contact-list">
+                        <li><strong>Telefone:</strong><br>(00) 3000-0000</li>
+                        <li><strong>Horário de Funcionamento:</strong><br>Seg. à Sex. das 09h às 20h<br>Sáb. das 09h às 18h</li>
+                        <li><strong>Contato:</strong><br>contato@barbeariaclassica.com.br</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>MINHA CONTA</h4>
+                    <ul>
+                        <li><a href="#">Minha Conta</a></li>
+                        <li><a href="#">Editar Endereço</a></li>
+                        <li><a href="#">Meus Agendamentos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>REDES SOCIAIS</h4>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Instagram">IG</a>
+                        <a href="#" aria-label="LinkedIn">IN</a>
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="YouTube">YT</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>BARBEARIA CLÁSSICA GESTÃO DE ATIVOS LTDA - CNPJ: 00.000.000/0001-00 - TODOS OS DIREITOS RESERVADOS &copy; 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-content">
+            <button class="modal-close" id="btnCloseModal">&times;</button>
+            <h3>Agendamento Rápido</h3>
+            <p>Escolha o canal de sua preferência sem burocracia:</p>
+            
+            <div class="booking-channels">
+                <a href="https://wa.me/5500000000000" target="_blank" class="channel-card">
+                    <strong>Via WhatsApp</strong>
+                    <span>Atendimento direto com a recepção</span>
+                </a>
+                <a href="#" class="channel-card">
+                    <strong>Agendamento Online (Web)</strong>
+                    <span>Escolha o barbeiro e horário em 3 cliques</span>
+                </a>
+                <a href="#" class="channel-card">
+                    <strong>Nosso Aplicativo</strong>
+                    <span>Disponível para iOS e Android</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
