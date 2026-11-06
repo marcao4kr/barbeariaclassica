@@ -61,18 +61,61 @@ document.addEventListener('DOMContentLoaded', () => {
         carousel.scrollBy({ left: -340, behavior: 'smooth' });
     });
 
-    const newsletterForm = document.getElementById('newsletterForm');
-    const franchiseForm = document.getElementById('franchiseForm');
+const whatsappInput = document.getElementById('whatsapp');
+const clientForm = document.getElementById('clientForm');
+const formFeedback = document.getElementById('formFeedback');
+const btnSubmitClient = document.getElementById('btnSubmitClient');
 
-    newsletterForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Cadastro realizado com sucesso! Você receberá nossas novidades.');
-        newsletterForm.reset();
-    });
+whatsappInput.addEventListener('input', (e) => {
+    let valor = e.target.value.replace(/\D/g, '');
+    if (valor.length > 11) valor = valor.slice(0, 11);
+    
+    if (valor.length > 2) {
+        valor = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
+    }
+    if (valor.length > 10) {
+        valor = `${valor.slice(0, 10)}-${valor.slice(10)}`;
+    }
+    e.target.value = valor;
+});
 
-    franchiseForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Solicitação de franquia enviada! Nossa equipe entrará em contato.');
-        franchiseForm.reset();
-    });
+clientForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formFeedback.textContent = '';
+    formFeedback.className = 'form-feedback';
+    btnSubmitClient.disabled = true;
+    btnSubmitClient.textContent = 'ENVIANDO...';
+
+    const payload = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        data_nascimento: document.getElementById('data_nascimento').value
+    };
+
+    try {
+        const response = await fetch('cadastrar_cliente.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const resultado = await response.json();
+
+        if (response.ok && resultado.sucesso) {
+            formFeedback.textContent = resultado.mensagem;
+            formFeedback.classList.add('sucesso');
+            clientForm.reset();
+        } else {
+            formFeedback.textContent = resultado.mensagem || 'Ocorreu um erro.';
+            formFeedback.classList.add('erro');
+        }
+    } catch (error) {
+        formFeedback.textContent = 'Erro de comunicação com o servidor.';
+        formFeedback.classList.add('erro');
+    } finally {
+        btnSubmitClient.disabled = false;
+        btnSubmitClient.textContent = 'CADASTRAR';
+    }
+});
 });

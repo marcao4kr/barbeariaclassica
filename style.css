@@ -641,3 +641,21 @@ ul {
         flex: 0 0 100%;
     }
 }
+
+.newsletter-form input[type="date"] {
+    color-scheme: dark;
+}
+
+.form-feedback {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.form-feedback.sucesso {
+    color: #4caf50;
+}
+
+.form-feedback.erro {
+    color: #f44336;
+}
