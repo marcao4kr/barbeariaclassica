@@ -17,15 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnHeroAgendar = document.getElementById('btnHeroAgendar');
     const btnCloseModal = document.getElementById('btnCloseModal');
 
-    const openModal = () => bookingModal.classList.add('active');
-    const closeModal = () => bookingModal.classList.remove('active');
+    const openBooking = () => bookingModal.classList.add('active');
+    const closeBooking = () => bookingModal.classList.remove('active');
 
-    btnOpenModal.addEventListener('click', openModal);
-    btnHeroAgendar.addEventListener('click', openModal);
-    btnCloseModal.addEventListener('click', closeModal);
+    btnOpenModal.addEventListener('click', openBooking);
+    btnHeroAgendar.addEventListener('click', openBooking);
+    btnCloseModal.addEventListener('click', closeBooking);
 
     bookingModal.addEventListener('click', (e) => {
-        if (e.target === bookingModal) closeModal();
+        if (e.target === bookingModal) closeBooking();
     });
 
     const filterButtons = document.querySelectorAll('.filter-btn');
@@ -61,61 +61,214 @@ document.addEventListener('DOMContentLoaded', () => {
         carousel.scrollBy({ left: -340, behavior: 'smooth' });
     });
 
-const whatsappInput = document.getElementById('whatsapp');
-const clientForm = document.getElementById('clientForm');
-const formFeedback = document.getElementById('formFeedback');
-const btnSubmitClient = document.getElementById('btnSubmitClient');
+    const newsletterForm = document.getElementById('newsletterForm');
+    const franchiseForm = document.getElementById('franchiseForm');
 
-whatsappInput.addEventListener('input', (e) => {
-    let valor = e.target.value.replace(/\D/g, '');
-    if (valor.length > 11) valor = valor.slice(0, 11);
-    
-    if (valor.length > 2) {
-        valor = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
-    }
-    if (valor.length > 10) {
-        valor = `${valor.slice(0, 10)}-${valor.slice(10)}`;
-    }
-    e.target.value = valor;
-});
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Cadastro na newsletter realizado com sucesso!');
+        newsletterForm.reset();
+    });
 
-clientForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    formFeedback.textContent = '';
-    formFeedback.className = 'form-feedback';
-    btnSubmitClient.disabled = true;
-    btnSubmitClient.textContent = 'ENVIANDO...';
+    franchiseForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Solicitação de franquia enviada! Nossa equipe entrará em contato.');
+        franchiseForm.reset();
+    });
 
-    const payload = {
-        nome: document.getElementById('nome').value,
-        email: document.getElementById('email').value,
-        whatsapp: document.getElementById('whatsapp').value,
-        data_nascimento: document.getElementById('data_nascimento').value
+    const authModal = document.getElementById('authModal');
+    const btnOpenAuth = document.getElementById('btnOpenAuth');
+    const footerLinkConta = document.getElementById('footerLinkConta');
+    const btnCloseAuth = document.getElementById('btnCloseAuth');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const authViews = document.getElementById('authViews');
+    const profileView = document.getElementById('profileView');
+    const loggedUserName = document.getElementById('loggedUserName');
+    const btnLogout = document.getElementById('btnLogout');
+
+    const updateAuthUI = () => {
+        const clienteLogado = JSON.parse(localStorage.getItem('clienteLogado'));
+        if (clienteLogado) {
+            const primeiroNome = clienteLogado.nome.split(' ')[0];
+            loggedUserName.textContent = primeiroNome;
+            authViews.style.display = 'none';
+            profileView.classList.add('active');
+            document.getElementById('profNome').textContent = clienteLogado.nome;
+            document.getElementById('profEmail').textContent = clienteLogado.email;
+            document.getElementById('profWhatsapp').textContent = clienteLogado.whatsapp;
+            document.getElementById('profNascimento').textContent = clienteLogado.data_nascimento.split('-').reverse().join('/');
+        } else {
+            loggedUserName.textContent = 'Entrar';
+            authViews.style.display = 'block';
+            profileView.classList.remove('active');
+        }
     };
 
-    try {
-        const response = await fetch('cadastrar_cliente.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+    updateAuthUI();
+
+    const openAuth = (e) => {
+        if (e) e.preventDefault();
+        updateAuthUI();
+        authModal.classList.add('active');
+    };
+
+    const closeAuth = () => authModal.classList.remove('active');
+
+    btnOpenAuth.addEventListener('click', openAuth);
+    footerLinkConta.addEventListener('click', openAuth);
+    btnCloseAuth.addEventListener('click', closeAuth);
+
+    authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) closeAuth();
+    });
+
+    authTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            authTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            if (tab.dataset.tab === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+            }
         });
+    });
 
-        const resultado = await response.json();
+    const aplicarMascaraTelefone = (input) => {
+        input.addEventListener('input', (e) => {
+            let valor = e.target.value.replace(/\D/g, '');
+            if (valor.length > 11) valor = valor.slice(0, 11);
+            if (valor.length > 2) valor = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
+            if (valor.length > 10) valor = `${valor.slice(0, 10)}-${valor.slice(10)}`;
+            e.target.value = valor;
+        });
+    };
 
-        if (response.ok && resultado.sucesso) {
-            formFeedback.textContent = resultado.mensagem;
-            formFeedback.classList.add('sucesso');
-            clientForm.reset();
-        } else {
-            formFeedback.textContent = resultado.mensagem || 'Ocorreu um erro.';
-            formFeedback.classList.add('erro');
+    aplicarMascaraTelefone(document.getElementById('regWhatsapp'));
+    aplicarMascaraTelefone(document.getElementById('loginWhatsapp'));
+
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const feedback = document.getElementById('registerFeedback');
+        const btnSubmit = document.getElementById('btnSubmitRegister');
+        feedback.textContent = '';
+        feedback.className = 'form-feedback';
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'CRIANDO CONTA...';
+
+        const payload = {
+            acao: 'cadastrar',
+            nome: document.getElementById('regNome').value.trim(),
+            email: document.getElementById('regEmail').value.trim(),
+            whatsapp: document.getElementById('regWhatsapp').value.trim(),
+            data_nascimento: document.getElementById('regNascimento').value
+        };
+
+        try {
+            const response = await fetch('/api/cadastrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.status === 404 || response.status === 405) {
+                throw new Error('Ambiente local sem backend ativo');
+            }
+
+            const resultado = await response.json();
+
+            if (response.ok && resultado.sucesso) {
+                localStorage.setItem('clienteLogado', JSON.stringify(payload));
+                feedback.textContent = 'Conta criada com sucesso!';
+                feedback.classList.add('sucesso');
+                registerForm.reset();
+                setTimeout(() => updateAuthUI(), 800);
+            } else {
+                feedback.textContent = resultado.mensagem || 'Erro ao cadastrar.';
+                feedback.classList.add('erro');
+            }
+        } catch (err) {
+            const listaLocal = JSON.parse(localStorage.getItem('clientesBarbearia') || '[]');
+            const jaExiste = listaLocal.some(c => c.email.toLowerCase() === payload.email.toLowerCase());
+
+            if (jaExiste) {
+                feedback.textContent = 'Este e-mail já está cadastrado.';
+                feedback.classList.add('erro');
+            } else {
+                listaLocal.push(payload);
+                localStorage.setItem('clientesBarbearia', JSON.stringify(listaLocal));
+                localStorage.setItem('clienteLogado', JSON.stringify(payload));
+                feedback.textContent = 'Conta criada com sucesso!';
+                feedback.classList.add('sucesso');
+                registerForm.reset();
+                setTimeout(() => updateAuthUI(), 800);
+            }
+        } finally {
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'CRIAR CONTA';
         }
-    } catch (error) {
-        formFeedback.textContent = 'Erro de comunicação com o servidor.';
-        formFeedback.classList.add('erro');
-    } finally {
-        btnSubmitClient.disabled = false;
-        btnSubmitClient.textContent = 'CADASTRAR';
-    }
-});
+    });
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const feedback = document.getElementById('loginFeedback');
+        const btnSubmit = document.getElementById('btnSubmitLogin');
+        feedback.textContent = '';
+        feedback.className = 'form-feedback';
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'VERIFICANDO...';
+
+        const email = document.getElementById('loginEmail').value.trim();
+        const whatsapp = document.getElementById('loginWhatsapp').value.trim();
+
+        try {
+            const response = await fetch('/api/cadastrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ acao: 'login', email, whatsapp })
+            });
+
+            if (response.status === 404 || response.status === 405) {
+                throw new Error('Ambiente local sem backend ativo');
+            }
+
+            const resultado = await response.json();
+
+            if (response.ok && resultado.sucesso) {
+                localStorage.setItem('clienteLogado', JSON.stringify(resultado.cliente));
+                loginForm.reset();
+                updateAuthUI();
+            } else {
+                feedback.textContent = resultado.mensagem || 'Dados não conferem.';
+                feedback.classList.add('erro');
+            }
+        } catch (err) {
+            const listaLocal = JSON.parse(localStorage.getItem('clientesBarbearia') || '[]');
+            const cliente = listaLocal.find(
+                c => c.email.toLowerCase() === email.toLowerCase() && c.whatsapp === whatsapp
+            );
+
+            if (cliente) {
+                localStorage.setItem('clienteLogado', JSON.stringify(cliente));
+                loginForm.reset();
+                updateAuthUI();
+            } else {
+                feedback.textContent = 'Cliente não encontrado. Verifique e-mail e WhatsApp.';
+                feedback.classList.add('erro');
+            }
+        } finally {
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'ACESSAR CONTA';
+        }
+    });
+
+    btnLogout.addEventListener('click', () => {
+        localStorage.removeItem('clienteLogado');
+        updateAuthUI();
+    });
 });

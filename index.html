@@ -31,6 +31,15 @@
 
             <div class="header-actions">
                 <button class="btn btn-primary" id="btnOpenModal">Agende</button>
+                
+                <button class="user-btn" id="btnOpenAuth" aria-label="Área do Cliente" title="Entrar ou Cadastrar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="user-name" id="loggedUserName">Entrar</span>
+                </button>
+
                 <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir Menu">
                     &#9776;
                 </button>
@@ -178,17 +187,14 @@
         <div class="container">
             <div class="footer-top-grid">
                 <div class="newsletter-box">
-    <span class="footer-label">FAÇA PARTE DO CLUBE</span>
-    <h3>CADASTRO DE CLIENTES</h3>
-    <form class="newsletter-form" id="clientForm">
-        <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
-        <input type="email" id="email" name="email" placeholder="E-mail" required>
-        <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp (DDD + Número)" maxlength="15" required>
-        <input type="date" id="data_nascimento" name="data_nascimento" required title="Data de Nascimento">
-        <button type="submit" class="btn btn-primary" id="btnSubmitClient">CADASTRAR</button>
-    </form>
-    <p id="formFeedback" class="form-feedback"></p>
-</div>
+                    <span class="footer-label">CADASTRE-SE E RECEBA NOSSAS</span>
+                    <h3>NOVIDADES</h3>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="text" placeholder="Nome" required>
+                        <input type="email" placeholder="E-mail" required>
+                        <button type="submit" class="btn btn-primary">CADASTRAR</button>
+                    </form>
+                </div>
 
                 <div class="franchise-box">
                     <h4>Informações sobre o processo de franquias</h4>
@@ -234,7 +240,7 @@
                 <div class="footer-col">
                     <h4>MINHA CONTA</h4>
                     <ul>
-                        <li><a href="#">Minha Conta</a></li>
+                        <li><a href="#" id="footerLinkConta">Minha Conta</a></li>
                         <li><a href="#">Editar Endereço</a></li>
                         <li><a href="#">Meus Agendamentos</a></li>
                     </ul>
@@ -276,6 +282,66 @@
                     <strong>Nosso Aplicativo</strong>
                     <span>Disponível para iOS e Android</span>
                 </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content auth-modal-content">
+            <button class="modal-close" id="btnCloseAuth">&times;</button>
+            
+            <div id="authViews">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">ENTRAR</button>
+                    <button class="auth-tab" data-tab="register">CADASTRAR</button>
+                </div>
+
+                <form id="loginForm" class="auth-form active">
+                    <div class="input-group">
+                        <label for="loginEmail">E-mail</label>
+                        <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="loginWhatsapp">WhatsApp (usado no cadastro)</label>
+                        <input type="tel" id="loginWhatsapp" placeholder="(00) 00000-0000" maxlength="15" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full" id="btnSubmitLogin">ACESSAR CONTA</button>
+                    <p id="loginFeedback" class="form-feedback"></p>
+                </form>
+
+                <form id="registerForm" class="auth-form">
+                    <div class="input-group">
+                        <label for="regNome">Nome Completo</label>
+                        <input type="text" id="regNome" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="regEmail">E-mail</label>
+                        <input type="email" id="regEmail" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="regWhatsapp">WhatsApp</label>
+                            <input type="tel" id="regWhatsapp" placeholder="(00) 00000-0000" maxlength="15" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="regNascimento">Data de Nascimento</label>
+                            <input type="date" id="regNascimento" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full" id="btnSubmitRegister">CRIAR CONTA</button>
+                    <p id="registerFeedback" class="form-feedback"></p>
+                </form>
+            </div>
+
+            <div id="profileView" class="profile-view">
+                <h3>Perfil do Cliente</h3>
+                <div class="profile-details">
+                    <p><strong>Nome:</strong> <span id="profNome"></span></p>
+                    <p><strong>E-mail:</strong> <span id="profEmail"></span></p>
+                    <p><strong>WhatsApp:</strong> <span id="profWhatsapp"></span></p>
+                    <p><strong>Nascimento:</strong> <span id="profNascimento"></span></p>
+                </div>
+                <button class="btn btn-outline btn-full" id="btnLogout">SAIR DA CONTA</button>
             </div>
         </div>
     </div>
