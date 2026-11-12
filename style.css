@@ -814,3 +814,134 @@ ul {
         display: none;
     }
 }
+
+.kids-view {
+    display: none;
+    margin-top: 65px;
+    background-color: var(--bg-dark);
+    animation: fadeInKids 0.35s ease;
+}
+
+.kids-view.active {
+    display: block;
+}
+
+@keyframes fadeInKids {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.kids-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 420px;
+    background: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.kids-badge-top {
+    display: inline-block;
+    background-color: rgba(197, 160, 89, 0.15);
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.kids-subtitle {
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: -15px auto 25px;
+    font-size: 1rem;
+}
+
+.kids-container {
+    padding: 70px 0;
+}
+
+.kids-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 70px;
+}
+
+.kids-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 35px 25px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.kids-card:hover {
+    border-color: var(--accent-gold);
+}
+
+.kids-icon {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.kids-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.kids-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.kids-services-box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 45px 35px;
+}
+
+.kids-price-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--border-color);
+    gap: 20px;
+}
+
+.price-item h4 {
+    font-size: 1.05rem;
+    color: var(--text-white);
+    margin-bottom: 4px;
+}
+
+.price-item span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.price-tag {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--accent-gold);
+    white-space: nowrap;
+}
+
+.badge-kids.active-tab {
+    background-color: var(--accent-gold);
+    color: var(--bg-dark);
+    font-weight: 600;
+}

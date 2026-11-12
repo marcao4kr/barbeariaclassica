@@ -271,4 +271,49 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('clienteLogado');
         updateAuthUI();
     });
+    const mainView = document.getElementById('mainView');
+    const kidsView = document.getElementById('kidsView');
+    const badgeKidsLink = document.querySelector('.badge-kids');
+    const btnVoltarAdulto = document.getElementById('btnVoltarAdulto');
+    const btnKidsAgendar = document.getElementById('btnKidsAgendar');
+    const expKidsCard = document.getElementById('kids');
+
+    const abrirAbaKids = (e) => {
+        if (e) e.preventDefault();
+        mainView.style.display = 'none';
+        kidsView.classList.add('active');
+        badgeKidsLink.classList.add('active-tab');
+        navbar.classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const voltarSalaoAdulto = () => {
+        kidsView.classList.remove('active');
+        mainView.style.display = 'block';
+        badgeKidsLink.classList.remove('active-tab');
+    };
+
+    badgeKidsLink.addEventListener('click', abrirAbaKids);
+
+    if (expKidsCard) {
+        expKidsCard.style.cursor = 'pointer';
+        expKidsCard.addEventListener('click', abrirAbaKids);
+    }
+
+    if (btnVoltarAdulto) {
+        btnVoltarAdulto.addEventListener('click', () => {
+            voltarSalaoAdulto();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    if (btnKidsAgendar) {
+        btnKidsAgendar.addEventListener('click', openBooking);
+    }
+
+    document.querySelectorAll('.nav-link:not(.badge-kids), .logo').forEach(link => {
+        link.addEventListener('click', () => {
+            voltarSalaoAdulto();
+        });
+    });
 });
