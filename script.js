@@ -322,4 +322,44 @@ document.addEventListener('DOMContentLoaded', () => {
             voltarSalaoAdulto();
         });
     });
+const kidsCards = document.querySelectorAll('.kids-card');
+
+    kidsCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+    });
+
+    const emojisKids = ['⭐', '⚡', '🎮', '✨', '🏎️', '🚀'];
+    let ultimoSparkle = 0;
+
+    if (kidsView) {
+        kidsView.addEventListener('mousemove', (e) => {
+            const agora = Date.now();
+            if (agora - ultimoSparkle < 90) return;
+            ultimoSparkle = agora;
+
+            const sparkle = document.createElement('span');
+            sparkle.className = 'kids-sparkle';
+            sparkle.textContent = emojisKids[Math.floor(Math.random() * emojisKids.length)];
+            sparkle.style.left = `${e.clientX}px`;
+            sparkle.style.top = `${e.clientY}px`;
+
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 800);
+        });
+    }
 });
