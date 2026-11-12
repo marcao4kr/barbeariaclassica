@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         const { data, error } = await supabase
             .from('clientes')
             .select('*')
-            .eq('email', email)
+            .eq('email', email.toLowerCase())
             .eq('whatsapp', whatsapp)
             .single();
 
@@ -30,9 +30,11 @@ export default async function handler(req, res) {
         return res.status(400).json({ sucesso: false, mensagem: 'Preencha todos os campos obrigatórios.' });
     }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
         .from('clientes')
-        .insert([{ nome, email, whatsapp, data_nascimento }]);
+        .insert([{ nome, email: email.toLowerCase(), whatsapp, data_nascimento }])
+        .select()
+        .single();
 
     if (error) {
         if (error.code === '23505') {
@@ -41,5 +43,5 @@ export default async function handler(req, res) {
         return res.status(500).json({ sucesso: false, mensagem: 'Erro ao salvar no banco de dados.' });
     }
 
-    return res.status(200).json({ sucesso: true, mensagem: 'Cliente cadastrado com sucesso!' });
+    return res.status(200).json({ sucesso: true, cliente: data, mensagem: 'Cliente cadastrado com sucesso!' });
 }
