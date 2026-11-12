@@ -276,29 +276,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const badgeKidsLink = document.querySelector('.badge-kids');
     const btnVoltarAdulto = document.getElementById('btnVoltarAdulto');
     const btnKidsAgendar = document.getElementById('btnKidsAgendar');
+    const btnOpenKids = document.querySelector('.btn-open-kids');
     const expKidsCard = document.getElementById('kids');
+
+    const secoesAdulto = document.querySelectorAll(
+        '.hero, .experience-section, .portfolio-section, .testimonials-section'
+    );
 
     const abrirAbaKids = (e) => {
         if (e) e.preventDefault();
-        mainView.style.display = 'none';
+        if (!kidsView) return;
+
+        secoesAdulto.forEach(sec => sec.style.display = 'none');
         kidsView.classList.add('active');
-        badgeKidsLink.classList.add('active-tab');
+        if (badgeKidsLink) badgeKidsLink.classList.add('active-tab');
         navbar.classList.remove('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        kidsView.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     const voltarSalaoAdulto = () => {
+        if (!kidsView) return;
         kidsView.classList.remove('active');
-        mainView.style.display = 'block';
-        badgeKidsLink.classList.remove('active-tab');
+        secoesAdulto.forEach(sec => sec.style.display = '');
+        if (badgeKidsLink) badgeKidsLink.classList.remove('active-tab');
     };
 
-    badgeKidsLink.addEventListener('click', abrirAbaKids);
-
-    if (expKidsCard) {
-        expKidsCard.style.cursor = 'pointer';
-        expKidsCard.addEventListener('click', abrirAbaKids);
-    }
+    if (badgeKidsLink) badgeKidsLink.addEventListener('click', abrirAbaKids);
+    if (btnOpenKids) btnOpenKids.addEventListener('click', abrirAbaKids);
+    if (expKidsCard) expKidsCard.addEventListener('click', abrirAbaKids);
 
     if (btnVoltarAdulto) {
         btnVoltarAdulto.addEventListener('click', () => {
