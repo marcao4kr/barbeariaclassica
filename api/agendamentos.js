@@ -85,6 +85,24 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ sucesso: true, agendamento: data });
     }
+if (req.method === 'DELETE') {
+        const { id, whatsapp } = req.query;
 
+        if (!id || !whatsapp) {
+            return res.status(400).json({ sucesso: false, mensagem: 'Dados inválidos para cancelamento.' });
+        }
+
+        const { error } = await supabase
+            .from('agendamentos')
+            .delete()
+            .eq('id', id)
+            .eq('cliente_whatsapp', whatsapp);
+
+        if (error) {
+            return res.status(500).json({ sucesso: false, mensagem: 'Erro ao cancelar agendamento.' });
+        }
+
+        return res.status(200).json({ sucesso: true });
+    }
     return res.status(405).json({ sucesso: false, mensagem: 'Método não permitido.' });
 }

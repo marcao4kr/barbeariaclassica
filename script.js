@@ -470,11 +470,42 @@ const kidsCards = document.querySelectorAll('.kids-card');
                 const dataFormatada = ag.data_agendamento.split('-').reverse().join('/');
                 return `
                     <div class="ag-card">
-                        <strong>${ag.servico}</strong>
-                        <span>${dataFormatada} às ${ag.horario} • ${ag.barbeiro} (${ag.ambiente})</span>
+                        <div class="ag-info">
+                            <strong>${ag.servico}</strong>
+                            <span>${dataFormatada} às ${ag.horario} • ${ag.barbeiro} (${ag.ambiente})</span>
+                        </div>
+                        <button class="btn-cancelar-ag" data-id="${ag.id}">Cancelar</button>
                     </div>
                 `;
             }).join('');
+
+            listaMeusAgendamentos.querySelectorAll('.btn-cancelar-ag').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    if (!confirm('Deseja cancelar este agendamento?')) return;
+
+                    btn.disabled = true;
+                    btn.textContent = '...';
+
+                    try {
+                        const delUrl = `/api/agendamentos?id=${btn.dataset.id}&whatsapp=${encodeURIComponent(clienteLogado.whatsapp)}`;
+                        const res = await fetch(delUrl, { method: 'DELETE' });
+                        const data = await res.json();
+
+                        if (data.sucesso) {
+                            carregarMeusAgendamentos();
+                            atualizarHorariosDisponiveis();
+                        } else {
+                            alert('Não foi possível cancelar o agendamento.');
+                            btn.disabled = false;
+                            btn.textContent = 'Cancelar';
+                        }
+                    } catch (err) {
+                        alert('Erro de conexão ao cancelar.');
+                        btn.disabled = false;
+                        btn.textContent = 'Cancelar';
+                    }
+                });
+            });
         } catch (err) {
             listaMeusAgendamentos.innerHTML = '<p class="ag-empty">Disponível na versão online.</p>';
         }

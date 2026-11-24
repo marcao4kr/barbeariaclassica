@@ -1131,10 +1131,41 @@ ul {
 }
 
 .ag-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
     background-color: #141414;
     border: 1px solid var(--border-color);
     padding: 10px 12px;
     font-size: 0.85rem;
+}
+
+.ag-info strong {
+    display: block;
+    color: var(--text-white);
+    margin-bottom: 2px;
+}
+
+.ag-info span {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.btn-cancelar-ag {
+    background-color: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.btn-cancelar-ag:hover {
+    background-color: #ef4444;
+    color: #ffffff;
 }
 
 .ag-card strong {
