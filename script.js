@@ -627,4 +627,45 @@ const agServico = document.getElementById('agServico');
             openBooking();
         });
     }
+    let patoEasterEgg = null;
+
+    const moverPato = (pato) => {
+        const margem = 80;
+        const maxX = Math.max(margem, window.innerWidth - margem);
+        const maxY = Math.max(margem, window.innerHeight - margem);
+        const x = Math.floor(Math.random() * (maxX - margem)) + margem;
+        const y = Math.floor(Math.random() * (maxY - margem)) + margem;
+        pato.style.left = `${x}px`;
+        pato.style.top = `${y}px`;
+    };
+
+    const criarPato = () => {
+        if (patoEasterEgg) {
+            moverPato(patoEasterEgg);
+            return;
+        }
+
+        patoEasterEgg = document.createElement('div');
+        patoEasterEgg.className = 'kids-duck';
+        patoEasterEgg.textContent = '🦆';
+        patoEasterEgg.title = 'Quack!';
+        moverPato(patoEasterEgg);
+
+        patoEasterEgg.addEventListener('click', () => {
+            moverPato(patoEasterEgg);
+        });
+
+        document.body.appendChild(patoEasterEgg);
+    };
+
+    document.querySelectorAll('.kids-card').forEach(card => {
+        let cliques = 0;
+        card.addEventListener('click', () => {
+            cliques++;
+            if (cliques === 4) {
+                criarPato();
+                cliques = 0;
+            }
+        });
+    });
 });
