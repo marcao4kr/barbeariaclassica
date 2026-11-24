@@ -362,4 +362,25 @@ const kidsCards = document.querySelectorAll('.kids-card');
             setTimeout(() => sparkle.remove(), 800);
         });
     }
+    const sonsKids = [
+        new Audio('sons/game.mp3'),
+        new Audio('sons/honk.mp3'),
+        new Audio('sons/silencio.mp3')
+    ];
+
+    sonsKids.forEach(som => {
+        som.volume = 0.5;
+    });
+
+    document.querySelectorAll('.kids-card').forEach((card, index) => {
+        card.addEventListener('click', () => {
+            sonsKids.forEach(s => {
+                s.pause();
+                s.currentTime = 0;
+            });
+
+            const somAtual = sonsKids[index] || sonsKids[0];
+            somAtual.play().catch(() => {});
+        });
+    });
 });
