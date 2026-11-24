@@ -532,4 +532,43 @@ const kidsCards = document.querySelectorAll('.kids-card');
             }
         });
     }
+const agServico = document.getElementById('agServico');
+
+    const servicosPorAmbiente = {
+        'Salão Clássico': [
+            { value: 'Corte Clássico - R$ 70', label: 'Corte Clássico (R$ 70)' },
+            { value: 'Barba Tradicional - R$ 55', label: 'Barba Tradicional (R$ 55)' },
+            { value: 'Combo Cabelo + Barba - R$ 110', label: 'Combo Cabelo + Barba (R$ 110)' },
+            { value: 'Combo Pai & Filho - R$ 130', label: 'Combo Pai & Filho (R$ 130)' }
+        ],
+        'Espaço Kids': [
+            { value: 'Corte Infantil Kids - R$ 60', label: 'Corte Infantil Kids (R$ 60)' },
+            { value: 'Meu Primeiro Corte - R$ 75', label: 'Meu Primeiro Corte (R$ 75)' },
+            { value: 'Combo Pai & Filho - R$ 130', label: 'Combo Pai & Filho (R$ 130)' }
+        ]
+    };
+
+    const atualizarServicosPorAmbiente = () => {
+        if (!agAmbiente || !agServico) return;
+        const opcoes = servicosPorAmbiente[agAmbiente.value] || [];
+
+        agServico.innerHTML = '<option value="" disabled selected>Escolha o Serviço</option>';
+        opcoes.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.value;
+            option.textContent = item.label;
+            agServico.appendChild(option);
+        });
+    };
+
+    if (agAmbiente) {
+        agAmbiente.addEventListener('change', atualizarServicosPorAmbiente);
+        atualizarServicosPorAmbiente();
+    }
+
+    btnOpenModal.addEventListener('click', atualizarServicosPorAmbiente);
+    btnHeroAgendar.addEventListener('click', atualizarServicosPorAmbiente);
+    if (btnKidsAgendar) {
+        btnKidsAgendar.addEventListener('click', atualizarServicosPorAmbiente);
+    }
 });

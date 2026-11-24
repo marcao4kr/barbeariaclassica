@@ -1152,3 +1152,28 @@ ul {
     color: var(--text-muted);
     font-size: 0.85rem;
 }
+#formAgendamento input[type="text"],
+#formAgendamento input[type="tel"],
+#formAgendamento input[type="date"] {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: #141414;
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#formAgendamento input::placeholder {
+    color: var(--text-muted);
+}
+
+#formAgendamento input:focus {
+    border-color: var(--accent-gold);
+}
+
+#formAgendamento input[type="date"] {
+    color-scheme: dark;
+}
