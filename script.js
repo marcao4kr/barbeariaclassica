@@ -629,7 +629,7 @@ const agServico = document.getElementById('agServico');
     }
     let patoEasterEgg = null;
     const somPato = new Audio('sons/quack.mp3');
-    somPato.volume = 0.6;
+    somPato.volume = 0.4;
 
     const tocarQuack = () => {
         somPato.pause();
