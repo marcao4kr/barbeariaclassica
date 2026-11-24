@@ -383,4 +383,153 @@ const kidsCards = document.querySelectorAll('.kids-card');
             somAtual.play().catch(() => {});
         });
     });
+    const formAgendamento = document.getElementById('formAgendamento');
+    const agNome = document.getElementById('agNome');
+    const agWhatsapp = document.getElementById('agWhatsapp');
+    const agAmbiente = document.getElementById('agAmbiente');
+    const agBarbeiro = document.getElementById('agBarbeiro');
+    const agData = document.getElementById('agData');
+    const agHorario = document.getElementById('agHorario');
+    const listaMeusAgendamentos = document.getElementById('listaMeusAgendamentos');
+
+    if (agWhatsapp) aplicarMascaraTelefone(agWhatsapp);
+
+    if (agData) {
+        const hoje = new Date().toISOString().split('T')[0];
+        agData.setAttribute('min', hoje);
+    }
+
+    const preencherDadosAgendamento = (ambientePadrao) => {
+        const clienteLogado = JSON.parse(localStorage.getItem('clienteLogado'));
+        if (clienteLogado && agNome && agWhatsapp) {
+            agNome.value = clienteLogado.nome || '';
+            agWhatsapp.value = clienteLogado.whatsapp || '';
+        }
+        if (ambientePadrao && agAmbiente) {
+            agAmbiente.value = ambientePadrao;
+        }
+    };
+
+    const atualizarHorariosDisponiveis = async () => {
+        if (!agBarbeiro || !agData || !agHorario) return;
+        const barbeiro = agBarbeiro.value;
+        const data = agData.value;
+        if (!barbeiro || !data) return;
+
+        Array.from(agHorario.options).forEach(opt => {
+            if (opt.value) {
+                opt.disabled = false;
+                opt.textContent = opt.value;
+            }
+        });
+
+        try {
+            const url = `/api/agendamentos?barbeiro=${encodeURIComponent(barbeiro)}&data=${encodeURIComponent(data)}`;
+            const response = await fetch(url);
+            const resultado = await response.json();
+
+            if (resultado.sucesso && Array.isArray(resultado.ocupados)) {
+                Array.from(agHorario.options).forEach(opt => {
+                    if (resultado.ocupados.includes(opt.value)) {
+                        opt.disabled = true;
+                        opt.textContent = `${opt.value} (Ocupado)`;
+                        if (agHorario.value === opt.value) agHorario.value = '';
+                    }
+                });
+            }
+        } catch (err) {}
+    };
+
+    if (agBarbeiro) agBarbeiro.addEventListener('change', atualizarHorariosDisponiveis);
+    if (agData) agData.addEventListener('change', atualizarHorariosDisponiveis);
+
+    btnOpenModal.addEventListener('click', () => preencherDadosAgendamento('Salão Clássico'));
+    btnHeroAgendar.addEventListener('click', () => preencherDadosAgendamento('Salão Clássico'));
+    if (btnKidsAgendar) {
+        btnKidsAgendar.addEventListener('click', () => preencherDadosAgendamento('Espaço Kids'));
+    }
+
+    const carregarMeusAgendamentos = async () => {
+        if (!listaMeusAgendamentos) return;
+        const clienteLogado = JSON.parse(localStorage.getItem('clienteLogado'));
+        if (!clienteLogado || !clienteLogado.whatsapp) return;
+
+        listaMeusAgendamentos.innerHTML = '<p class="ag-empty">Carregando...</p>';
+
+        try {
+            const url = `/api/agendamentos?whatsapp=${encodeURIComponent(clienteLogado.whatsapp)}`;
+            const response = await fetch(url);
+            const resultado = await response.json();
+
+            if (!resultado.sucesso || !resultado.agendamentos.length) {
+                listaMeusAgendamentos.innerHTML = '<p class="ag-empty">Nenhum agendamento encontrado.</p>';
+                return;
+            }
+
+            listaMeusAgendamentos.innerHTML = resultado.agendamentos.map(ag => {
+                const dataFormatada = ag.data_agendamento.split('-').reverse().join('/');
+                return `
+                    <div class="ag-card">
+                        <strong>${ag.servico}</strong>
+                        <span>${dataFormatada} às ${ag.horario} • ${ag.barbeiro} (${ag.ambiente})</span>
+                    </div>
+                `;
+            }).join('');
+        } catch (err) {
+            listaMeusAgendamentos.innerHTML = '<p class="ag-empty">Disponível na versão online.</p>';
+        }
+    };
+
+    btnOpenAuth.addEventListener('click', carregarMeusAgendamentos);
+    footerLinkConta.addEventListener('click', carregarMeusAgendamentos);
+
+    if (formAgendamento) {
+        formAgendamento.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const feedback = document.getElementById('agendamentoFeedback');
+            const btnSubmit = document.getElementById('btnSubmitAgendamento');
+
+            feedback.textContent = '';
+            feedback.className = 'form-feedback';
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'RESERVANDO...';
+
+            const payload = {
+                cliente_nome: agNome.value.trim(),
+                cliente_whatsapp: agWhatsapp.value.trim(),
+                ambiente: agAmbiente.value,
+                servico: document.getElementById('agServico').value,
+                barbeiro: agBarbeiro.value,
+                data_agendamento: agData.value,
+                horario: agHorario.value
+            };
+
+            try {
+                const response = await fetch('/api/agendamentos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const resultado = await response.json();
+
+                if (!response.ok || !resultado.sucesso) {
+                    feedback.textContent = resultado.mensagem || 'Erro ao agendar.';
+                    feedback.classList.add('erro');
+                    return;
+                }
+
+                feedback.textContent = 'Horário reservado com sucesso!';
+                feedback.classList.add('sucesso');
+                formAgendamento.reset();
+                atualizarHorariosDisponiveis();
+            } catch (err) {
+                feedback.textContent = 'Erro de conexão. Teste pelo link da Vercel.';
+                feedback.classList.add('erro');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'CONFIRMAR HORÁRIO';
+            }
+        });
+    }
 });

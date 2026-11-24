@@ -1068,3 +1068,87 @@ ul {
         transform: translate(-50%, -110%) scale(1.1);
     }
 }
+.modal-select {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: #141414;
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.modal-select:focus {
+    border-color: var(--accent-gold);
+}
+
+.modal-select option:disabled {
+    color: #555555;
+}
+
+.ag-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.booking-divider {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color);
+}
+
+.booking-channels-mini {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.booking-channels-mini .channel-card {
+    padding: 10px 12px;
+}
+
+.meus-agendamentos {
+    margin: 18px 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color);
+}
+
+.meus-agendamentos h4 {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--accent-gold);
+    margin-bottom: 10px;
+}
+
+.agendamentos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.ag-card {
+    background-color: #141414;
+    border: 1px solid var(--border-color);
+    padding: 10px 12px;
+    font-size: 0.85rem;
+}
+
+.ag-card strong {
+    display: block;
+    color: var(--text-white);
+    margin-bottom: 2px;
+}
+
+.ag-card span {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.ag-empty {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
