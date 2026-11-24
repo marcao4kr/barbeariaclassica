@@ -628,6 +628,14 @@ const agServico = document.getElementById('agServico');
         });
     }
     let patoEasterEgg = null;
+    const somPato = new Audio('sons/quack.mp3');
+    somPato.volume = 0.6;
+
+    const tocarQuack = () => {
+        somPato.pause();
+        somPato.currentTime = 0;
+        somPato.play().catch(() => {});
+    };
 
     const moverPato = (pato) => {
         const margem = 80;
@@ -640,6 +648,8 @@ const agServico = document.getElementById('agServico');
     };
 
     const criarPato = () => {
+        tocarQuack();
+
         if (patoEasterEgg) {
             moverPato(patoEasterEgg);
             return;
@@ -647,11 +657,20 @@ const agServico = document.getElementById('agServico');
 
         patoEasterEgg = document.createElement('div');
         patoEasterEgg.className = 'kids-duck';
-        patoEasterEgg.textContent = '🦆';
         patoEasterEgg.title = 'Quack!';
+        patoEasterEgg.innerHTML = `
+            <svg viewBox="0 0 64 64" width="68" height="68" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 38 C12 28, 22 28, 28 30 C32 22, 34 14, 44 14 C52 14, 56 20, 56 26 C56 31, 52 34, 49 36 C53 40, 54 50, 44 54 C34 57, 16 56, 12 48 C10 44, 12 41, 12 38 Z" fill="#facc15"/>
+                <path d="M54 24 C59 23, 62 25, 62 27 C62 29, 58 30, 53 29 Z" fill="#f97316"/>
+                <circle cx="46" cy="22" r="3" fill="#1e293b"/>
+                <circle cx="47" cy="21" r="1" fill="#ffffff"/>
+                <path d="M22 39 C28 37, 36 39, 38 45 C32 48, 24 47, 22 39 Z" fill="#eab308"/>
+            </svg>
+        `;
         moverPato(patoEasterEgg);
 
         patoEasterEgg.addEventListener('click', () => {
+            tocarQuack();
             moverPato(patoEasterEgg);
         });
 

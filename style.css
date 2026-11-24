@@ -1300,7 +1300,8 @@ ul {
 }
 .kids-duck {
     position: fixed;
-    font-size: 3.2rem;
+    width: 68px;
+    height: 68px;
     cursor: pointer;
     z-index: 9999;
     user-select: none;
