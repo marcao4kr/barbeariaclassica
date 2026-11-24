@@ -364,8 +364,8 @@ const kidsCards = document.querySelectorAll('.kids-card');
     }
     const sonsKids = [
         new Audio('sons/game.mp3'),
-        new Audio('sons/honk.mp3'),
-        new Audio('sons/silencio.mp3')
+        new Audio('sons/silencio.mp3'),
+        new Audio('sons/honk.mp3')
     ];
 
     sonsKids.forEach(som => {
