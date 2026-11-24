@@ -1208,3 +1208,93 @@ ul {
 #formAgendamento input[type="date"] {
     color-scheme: dark;
 }
+.promo-popup {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 310px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--accent-gold);
+    padding: 20px;
+    z-index: 900;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.promo-popup.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.promo-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.promo-close:hover {
+    color: var(--text-white);
+}
+
+.promo-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    color: var(--accent-gold);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.promo-popup h4 {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--text-white);
+    margin-bottom: 6px;
+}
+
+.promo-popup p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin-bottom: 14px;
+}
+
+.promo-popup p strong {
+    color: var(--text-white);
+}
+
+.promo-cta {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--accent-gold);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.promo-cta:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 480px) {
+    .promo-popup {
+        right: 16px;
+        left: 16px;
+        bottom: 16px;
+        width: auto;
+    }
+}

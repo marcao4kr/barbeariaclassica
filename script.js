@@ -602,4 +602,29 @@ const agServico = document.getElementById('agServico');
     if (btnKidsAgendar) {
         btnKidsAgendar.addEventListener('click', atualizarServicosPorAmbiente);
     }
+    const promoPopup = document.getElementById('promoPopup');
+    const closePromoPopup = document.getElementById('closePromoPopup');
+    const btnPromoAgendar = document.getElementById('btnPromoAgendar');
+
+    if (promoPopup && !sessionStorage.getItem('promoVinhoFechada')) {
+        setTimeout(() => {
+            promoPopup.classList.add('show');
+        }, 3000);
+    }
+
+    if (closePromoPopup) {
+        closePromoPopup.addEventListener('click', () => {
+            promoPopup.classList.remove('show');
+            sessionStorage.setItem('promoVinhoFechada', 'true');
+        });
+    }
+
+    if (btnPromoAgendar) {
+        btnPromoAgendar.addEventListener('click', () => {
+            promoPopup.classList.remove('show');
+            preencherDadosAgendamento('Salão Clássico');
+            atualizarServicosPorAmbiente();
+            openBooking();
+        });
+    }
 });
